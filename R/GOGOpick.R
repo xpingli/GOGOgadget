@@ -73,17 +73,17 @@ GOGOpick <- function(dataset, database, write = TRUE, ... ){
 
         filtered <- DB[which(DBref %in% refids == TRUE),]
 
-        De <- vector()
         for( i in 1:nrow(filtered)){
 
 
-                De[i] <- joint_df[joint_df$refID == filtered[i],]$DE
+                if(filtered$refID[i] %in% up$refID){
+                        filtered$DE = "1"
+                } else if(filtered$refID[i] %in% down$refID){
+                        filtered$DE = "-1"
+                }
 
 
         }
-
-        filtered <- cbind(filtered, De)
-
 
 
 
