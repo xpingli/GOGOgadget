@@ -77,9 +77,12 @@ GOGOpick <- function(dataset, database, write = TRUE, ... ){
 
 
                 if(filtered$refID[i] %in% up$refID){
-                        filtered$DE = "1"
+                        filtered$DE[i] = "1"
+
                 } else if(filtered$refID[i] %in% down$refID){
-                        filtered$DE = "-1"
+                        filtered$DE[i] = "-1"
+                } else {
+                        filtered$DE[i] = "No match"
                 }
 
 
