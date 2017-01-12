@@ -82,7 +82,7 @@ GOGOpick <- function(dataset, database, write = TRUE, ... ){
 
         filtered <- DB[which(DBref %in% refids) == TRUE,]
 
-        Together <- cbind(filtered, DE)
+
 
 
 
@@ -93,6 +93,7 @@ GOGOpick <- function(dataset, database, write = TRUE, ... ){
                 write.csv(Together, ...)
         }
 
-        Together
+        dim(filtered)
+        length(DE)
 }
 
