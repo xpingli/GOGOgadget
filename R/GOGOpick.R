@@ -44,12 +44,11 @@ GOGOpick <- function(dataset, database, write = TRUE, ... ){
                         mutate(DE = "-1")
         }
 
-        joint_df <- as.data.frame(rbind(up, down), stringsAsFactors = FALSE)
 
 
 
 
-        if(grepl(".csv", database) == TRUE){
+        if(grepl(".csv", database)[1] == TRUE){
 
                 DB <- read.csv(database, stringsAsFactors = F)
         } else {
@@ -57,20 +56,32 @@ GOGOpick <- function(dataset, database, write = TRUE, ... ){
                 DB <- database
         }
 
-        refids <- joint_df$refID
-        share <- DB$refID %in% refids
+        share_up <-  database$refID %in% up$refID
 
-        Ont <- DB[which(share == TRUE), ]
+        Up <- database[which(share_up)== TRUE,]
 
-        comb <- cbind(joint_df, Ont)
+        Ups <- Up %>%
+                mutate(DE = "1")
+
+        share_down <- database$refID %in% down$refID
+
+        Down <- database[which(share_down) == TRUE,]
+
+        Downs <- Down %>%
+                mutate(DE = "-1")
+
+
+        Together <- rbind(Ups, Downs)
+
+
 
         if(write == FALSE){
                 warning("Write = F: not to produce a csv file")
         } else {
 
-                write.csv(comb, ...)
+                write.csv(Together, ...)
         }
 
-        comb
+        Together
 }
 
