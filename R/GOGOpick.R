@@ -26,10 +26,14 @@ GOGOpick <- function(dataset, database, write = TRUE, ... ){
                         select(refID, log2FoldChange) %>%
                         mutate(DE = "1")
 
+                colnames(up)[2] <- "logFC"
+
                 down <-  Sig %>%
                         filter(padj <= 0.05 & log2FoldChange <= -1) %>%
                         select(refID, log2FoldChange) %>%
                         mutate(DE = "-1")
+
+                colnames(down)[2] <- "logFC"
 
 
         } else {
@@ -58,17 +62,21 @@ GOGOpick <- function(dataset, database, write = TRUE, ... ){
 
         share_up <-  database$refID %in% up$refID
 
+        fc1 <- up[which(share_up) == TRUE, ]$logFC
+
         Up <- database[which(share_up)== TRUE,]
 
         Ups <- Up %>%
-                mutate(DE = "1")
+                mutate(DE = "1", logFC = fc1)
 
         share_down <- database$refID %in% down$refID
+
+        fc2 <- down[which(share_down) == TRUE, ]$logFC
 
         Down <- database[which(share_down) == TRUE,]
 
         Downs <- Down %>%
-                mutate(DE = "-1")
+                mutate(DE = "-1", logFC = fc2)
 
 
         Together <- rbind(Ups, Downs)
