@@ -60,26 +60,29 @@ GOGOpick <- function(dataset, database, write = TRUE, ... ){
                 DB <- database
         }
 
-        share_up <-  database$refID %in% up$refID
-
-        fc1 <- up[which(share_up) == TRUE, ]$logFC
-
-        Up <- database[which(share_up)== TRUE,]
-
-        Ups <- Up %>%
-                mutate(DE = "1", logFC = fc1)
-
-        share_down <- database$refID %in% down$refID
-
-        fc2 <- down[which(share_down) == TRUE, ]$logFC
-
-        Down <- database[which(share_down) == TRUE,]
-
-        Downs <- Down %>%
-                mutate(DE = "-1", logFC = fc2)
+        joint_df <- as.data.frame(rbind(up, down), stringAsFactors = FALSE)
 
 
-        Together <- rbind(Ups, Downs)
+        DE <- vector()
+        for( i in 1:nrow(DB)){
+
+                refids <- joint_df$refID
+                DBref <- DB$refID
+
+
+                if(DBref[i] %in% refids){
+
+                        DE[i] <- joint_df[joint_df$refID == DBref[i],]$DE
+                } else {
+
+                        next
+                }
+
+        }
+
+        filtered <- DB[which(DBref %in% refids) == TRUE,]
+
+        Together <- cbind(filtered, DE)
 
 
 
