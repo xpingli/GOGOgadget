@@ -63,7 +63,7 @@ GOGOpick <- function(dataset, database, write = TRUE, ... ){
                 DB <- read.csv(database, stringsAsFactors = F)
         } else {
 
-                DB <- database
+                DB <- as.data.frame(database, stringAsFactors = F)
         }
 
         joint_df <- as.data.frame(rbind(up, down), stringAsFactors = FALSE)
@@ -73,14 +73,16 @@ GOGOpick <- function(dataset, database, write = TRUE, ... ){
 
         filtered <- DB[which(DBref %in% refids == TRUE),]
 
-
+        De <- vector()
         for( i in 1:nrow(filtered)){
 
 
-                filtered$De[i] <- joint_df[joint_df$refID == filtered[i],]$DE
+                De[i] <- joint_df[joint_df$refID == filtered[i],]$DE
 
 
         }
+
+        filtered <- cbind(filtered, De)
 
 
 
