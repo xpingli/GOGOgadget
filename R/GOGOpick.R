@@ -40,7 +40,7 @@ GOGOpick <- function(dataset, database, write = TRUE, ... ){
 
                 down <- Sig %>%
                         filter(FDR <= 0.05 & logFC <= -1) %>%
-                        select(refID, logFC)
+                        select(refID, logFC) %>%
                         mutate(DE = "-1")
         }
 
@@ -62,13 +62,15 @@ GOGOpick <- function(dataset, database, write = TRUE, ... ){
 
         Ont <- DB[which(share == TRUE), ]
 
+        comb <- cbind(joint_df, Ont)
+
         if(write == FALSE){
                 warning("Write = F: not to produce a csv file")
         } else {
 
-                write.csv(Ont, ...)
+                write.csv(comb, ...)
         }
 
-        Ont
+        comb
 }
 
