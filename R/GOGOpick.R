@@ -75,7 +75,7 @@ GOGOpick <- function(dataset, database, write = TRUE, ... ){
                         DE[i] <- joint_df[joint_df$refID == DBref[i],]$DE
                 } else {
 
-                        next
+                        DE[i] <- "No match"
                 }
 
         }
