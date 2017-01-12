@@ -28,12 +28,15 @@ GOGOpick <- function(dataset, database, write = TRUE, ... ){
 
                 colnames(up)[2] <- "logFC"
 
+                write.csv(up, "[dra][DES]upReg.csv")
+
                 down <-  Sig %>%
                         filter(padj <= 0.05 & log2FoldChange <= -1) %>%
                         select(refID, log2FoldChange) %>%
                         mutate(DE = "-1")
 
                 colnames(down)[2] <- "logFC"
+                write.csv(down, "[dra][DES]downReg.csv")
 
 
         } else {
@@ -42,12 +45,15 @@ GOGOpick <- function(dataset, database, write = TRUE, ... ){
                         select(refID, logFC) %>%
                         mutate(DE = "1")
 
+                write.csv(up, "[dra][edgeR]upReg.csv")
+
                 down <- Sig %>%
                         filter(FDR <= 0.05 & logFC <= -1) %>%
                         select(refID, logFC) %>%
                         mutate(DE = "-1")
-        }
 
+                write.csv(down, "[dra][edgeR]downReg.csv")
+        }
 
 
 
@@ -62,26 +68,19 @@ GOGOpick <- function(dataset, database, write = TRUE, ... ){
 
         joint_df <- as.data.frame(rbind(up, down), stringAsFactors = FALSE)
 
+        refids <- joint_df$refID
+        DBref <- DB$refID
 
-        DE <- vector()
-        for( i in 1:nrow(DB)){
-
-                refids <- joint_df$refID
-                DBref <- DB$refID
+        filtered <- DB[which(DBref %in% refids == TRUE),]
 
 
-                if(DBref[i] %in% refids){
+        for( i in 1:nrow(filtered)){
 
-                        DE[i] <- joint_df[joint_df$refID == DBref[i],]$DE
-                } else {
 
-                        DE[i] <- "No match"
-                }
+                filtered$De[i] <- joint_df[joint_df$refID == filtered[i],]$DE
+
 
         }
-
-        filtered <- DB[which(DBref %in% refids) == TRUE,]
-
 
 
 
@@ -90,10 +89,10 @@ GOGOpick <- function(dataset, database, write = TRUE, ... ){
                 warning("Write = F: not to produce a csv file")
         } else {
 
-                write.csv(Together, ...)
+                write.csv(filtered, ...)
+
         }
 
-        dim(filtered)
-        length(DE)
+        filtered
 }
 
