@@ -290,7 +290,7 @@ DBconstruct <- function(ftp, species, short, write = F, ...){
 
                 }
 
-                rbind(data.frame(refID = RefID, geneID = geneids, proteinID = proids, Family_name = fam, Sub_family_name = sub_fam, goIDs = goID, annotation = annos, goType = type, goTerms = goTerm, Pathway = pathways, stringsAsFactors = F), data.frame(refID = c("DR_t13","DR_t0253", "DR_t02",   "DR_t02",   "DR_t0253", "DR_t18",   "DR_t11" ,"DR_r04",   "DR_r03",   "DR_r08",   "DR_t0253", "DR_t01",   "DR_t11",   "DR_t20","DR_2366"), geneID = NA, proteinID = NA, Family_name = NA, Sub_family_name = NA, goIDs = NA, annotation = tRNA$annotation, goType = rep("PC", 15), goTerms = c(rep("tRNA", 7), rep("ribosomal RNA", 3), rep("tRNA", 4), rep("ribosomal RNA", 1)), Pathway = NA, stringsAsFactors = F ))
+                rbind(data.frame(refID = RefID, geneID = geneids, proteinID = proids, Family_name = fam, Sub_family_name = sub_fam, goIDs = goID, annotation = annos, goType = type, goTerms = goTerm, Pathway = pathways, stringsAsFactors = F), data.frame(refID = c("DR_t13","DR_t0253", "DR_t02",   "DR_t02",   "DR_t0253", "DR_t18",   "DR_t11" ,"DR_r04",   "DR_r03",   "DR_r08",   "DR_t0253", "DR_t01",   "DR_t11",   "DR_t20","DR_2366"), geneID = NA, proteinID = NA, Family_name = NA, Sub_family_name = NA, goIDs = NA, annotation = c("tRNA-Ala", "tRNA-Asp", "tRNA-Asp", "tRNA-Asp", "tRNA-Asp", "tRNA-Pro", "tRNA-Met", "5S ribosomal RNA", "5S ribosomal RNA", "5S ribosomal RNA", "tRNA-Asp", "tRNA-Phe", "tRNA-Met", "tRNA-Leu", "50S ribosomal protein L32"), goType = rep("PC", 15), goTerms = c(rep("tRNA", 7), rep("ribosomal RNA", 3), rep("tRNA", 4), rep("ribosomal RNA", 1)), Pathway = NA, stringsAsFactors = F ))
 
         }
 
