@@ -189,9 +189,9 @@ GOGOpick <- function(dataset, database, species, short, write = TRUE, ... ){
         whole <- rbind(Up, Down)
 
 
-        write.csv(Up, "/processed/[dra]upReg.csv")
-        write.csv(Down, "/processed/[dra]downReg.csv")
-        write.csv(whole, "/processed/[dra]UpDown.csv")
+        write.csv(Up, "[dra]upReg.csv")
+        write.csv(Down, "[dra]downReg.csv")
+        write.csv(whole, "[dra]UpDown.csv")
 
 
 
