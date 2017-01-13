@@ -5,7 +5,7 @@
 #'
 #' @author Xiaoping Li
 #'
-#' @examples \dontrun{GOGOpick("DE_drad_24hr_adjst.csv", [dra]OntologyDataBase, write = T, "Up and Down regulated genes by using DESeq2.csv")}
+#' @examples \dontrun{GOGOpick("DE_drad_24hr_adjst.csv", [dra]OntologyDataBase, "Deinococcus radiodurans", "dra",write = T, "Up and Down regulated genes by using DESeq2.csv")}
 #'
 #' @import dplyr
 #' @import biomartr

@@ -10,7 +10,7 @@ GOGOpick(dataset, database, species, short, write = TRUE, ...)
 GOGOpick takes 6 arguments: "dataset" contains differentially expressed genes from edgeR and DESeq2. "database" is the Ontology database file you created use "DBconstruct" function. write" defualt is TRUE would write results in a csv file in the current directory. Use ... to specify the name of the csv file. Species is the full name of your organism, short is the short name for it. It also returns up regulation, down regulation, and a whole csv files.
 }
 \examples{
-\dontrun{GOGOpick("DE_drad_24hr_adjst.csv", [dra]OntologyDataBase, write = T, "Up and Down regulated genes by using DESeq2.csv")}
+\dontrun{GOGOpick("DE_drad_24hr_adjst.csv", [dra]OntologyDataBase, "Deinococcus radiodurans", "dra",write = T, "Up and Down regulated genes by using DESeq2.csv")}
 
 }
 \author{
