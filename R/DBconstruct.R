@@ -297,7 +297,7 @@ DBconstruct <- function(ftp, species, short, write = F, ...){
         go <- tidy_db(constructed_db)
         if(write == TRUE){
 
-                write.csv(go, file = paste("[GO]totalDB/", ..., sep = ""))
+                write.csv(go, file = paste("/[GO]totalDB/", ..., sep = ""))
 
         } else {
                 warning("Write = F: not to produce a whole PANTHER Gene Ontology .csv file")
