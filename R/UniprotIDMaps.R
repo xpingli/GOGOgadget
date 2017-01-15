@@ -10,7 +10,8 @@
 #'
 #' @keywords datasets
 #'
-#' @references http://www.uniprot.org/uploadlists/
+#' @references
+#' (\href{http://www.uniprot.org/uploadlists/}{Uniprot})
 
 
 
