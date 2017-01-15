@@ -160,6 +160,7 @@ GOGOscavenger <- function(whole, pick, taxiID, write = F, ...){
                 warning("Write = F: not save the file as in .csv.")
         }
 
+        vulture
 }
 
 
