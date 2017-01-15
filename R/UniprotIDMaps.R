@@ -1,6 +1,6 @@
 #' UniprotIDMaps data
 #'
-#' dataset for mapping refID (gene ID) to Uniprot ID, including symbols. Also loaded for GOGOscavenger function.
+#' dataset for mapping refID or gene ID to Uniprot ID, including symbols. Also loaded for GOGOscavenger function.
 #'
 #' @docType data
 #'
@@ -11,7 +11,7 @@
 #' @keywords datasets
 #'
 #' @source \href{http://www.uniprot.org/uploadlists/}{Uniprot}
-#'
+
 
 
 
