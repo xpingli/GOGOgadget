@@ -8,9 +8,8 @@
 #'
 #' @format data.frame
 #'
-#' @keywords datasets
 #'
-#' @source \href{http://www.uniprot.org/uploadlists/}{Uniprot}
+
 
 
 
