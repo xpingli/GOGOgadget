@@ -2,6 +2,8 @@
 
 export(DBconstruct)
 export(GOGOpick)
+export(GOGOscavenger)
 import(KEGGREST)
+import(UniProt.ws)
 import(biomartr)
 import(dplyr)

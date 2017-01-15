@@ -1,7 +1,18 @@
-GOGOscavenger <- function(updown, pick, taxiID, write = F, ...){
+#' GOGOscavenger function looks for the genes that have not been picked by GOGOpick(), but also significantly expressed. It turns to UniprotKB database, and search for the go terms.
+#'
+#' @author Xiaoping Li
+#'
+#' @description GOGOscavenger takes 5 arguments. whole data is from GOGOpick processing where it generates a dataset containing all the significantly determined up and down genes. Screening it against the "pick", it finds out the genes that are not missed by the GOGOpick because there is not hit in PANTHER ftp. It looks for the GO terms for those genes in Uniprot instead. TaxiID is the taxonomy ID for the species, it can be found by UniProt.ws package function availableUniprotSpecies(). The function produced a whole data set of all the up and down genes ontology and the ones GOGO pick missed.
+#'
+#' @import UniProt.ws
+#'
+#' @examples \dontrun{GOGOscavenger(whole, pick, 243230, write = T, "dra24hr_ontology.csv" )}
+#'
+#' @export
+GOGOscavenger <- function(whole, pick, taxiID, write = F, ...){
 
 
-        updown_ids <- updown$refID
+        updown_ids <- whole$refID
 
         pick <- pick[,-1]
         pick_ids <- pick$refID
@@ -9,7 +20,7 @@ GOGOscavenger <- function(updown, pick, taxiID, write = F, ...){
         #pick the genes that is not in the GOGOpick processed but do exist as significantly expressed in UpDown.csv
 
         shareIDs <- updown_ids %in% pick_ids
-        Un_Onted <- updown[!shareIDs,]
+        Un_Onted <- whole[!shareIDs,]
 
         Un_Onted_refID <- Un_Onted$refID
 
@@ -147,6 +158,7 @@ GOGOscavenger <- function(updown, pick, taxiID, write = F, ...){
         scavenger <- data.frame(refID = id_ref, geneID = geneid0, proteinID = proids, Family_name = NA, Sub_family_name = NA, goIDs = goid, annotation = annos0,goType = gotypes, goTerms = goterms, Pathway = rep("Uniprot", n), DE = de0, stringsAsFactors = F )
 
         vulture <- rbind(pick, scavenger)
+
         if(write == TRUE){
                 write.csv(vulture, ...)
         } else {
