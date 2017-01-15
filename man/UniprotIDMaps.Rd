@@ -3,16 +3,13 @@
 \docType{data}
 \name{UniprotIDMaps}
 \alias{UniprotIDMaps}
-\title{UniprotIDMaps data. dataset for mapping refID or gene ID to Uniprot ID, including symbols. Also loaded for GOGOscavenger function.}
-\format{data.frame}
+\title{UniprotIDMaps converts gene ID to Uniprot identifier}
+\format{A data frame}
 \usage{
 data("UniprotIDMaps")
 }
 \description{
-UniprotIDMaps data. dataset for mapping refID or gene ID to Uniprot ID, including symbols. Also loaded for GOGOscavenger function.
-}
-\references{
-Uniprot
+UniprotIDMaps converts gene ID to Uniprot identifier
 }
 \keyword{datasets}
 
