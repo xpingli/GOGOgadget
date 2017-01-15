@@ -8,4 +8,4 @@
 #' @format data.frame
 #'
 #' @references gene onthology consortium
-"cc_go"
+
