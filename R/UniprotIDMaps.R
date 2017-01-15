@@ -11,6 +11,6 @@
 #' @keywords datasets
 #'
 #' @references http://www.uniprot.org/uploadlists/
-"UniprotIDMaps"
+
 
 
