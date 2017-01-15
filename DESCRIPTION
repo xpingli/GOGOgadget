@@ -4,11 +4,12 @@ Title: construct database for your organism and pick matching from your analysis
 Version: 0.1.0
 Author: Xiaoping Li
 Maintainer: The package maintainer <xioli2013@gmail.com>
-Description: DBconstruct(), GOGOpick(), GOGOscavenger(), GOGOsummerise(), GOGOselect()
-Imports: KEGGREST
-Imports: UniProt.ws
-Imports: biomartr
-Imports: dplyr
+Description: Include 5 functions for Gene Ontology analysis
+Imports:        
+        KEGGREST, 
+        UniProt.ws, 
+        biomartr,
+        dplyr
 License: What license is it under?
 Encoding: UTF-8
 LazyData: true
