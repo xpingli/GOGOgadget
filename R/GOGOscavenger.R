@@ -14,7 +14,6 @@ GOGOscavenger <- function(whole, pick, taxiID, write = F, ...){
 
         updown_ids <- whole$refID
 
-        pick <- droplevels(pick[,-1])
         pick_ids <- pick$refID
 
         #pick the genes that is not in the GOGOpick processed but do exist as significantly expressed in UpDown.csv
