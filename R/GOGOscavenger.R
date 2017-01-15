@@ -24,7 +24,7 @@ GOGOscavenger <- function(whole, pick, taxiID, write = F, ...){
 
         Un_Onted_refID <- Un_Onted$refID
 
-        IDmaps <- data("UniprotIDMaps")
+        data("UniprotIDMaps")
         mf_go <- data("mf_go")
         bp_go <- data("bp_go")
         cc_go <- data("cc_go")
@@ -34,8 +34,8 @@ GOGOscavenger <- function(whole, pick, taxiID, write = F, ...){
         for( i in 1:length(Un_Onted_refID)){
 
 
-                index <- which(IDmaps$refID == Un_Onted_refID[i])
-                go <- IDmaps[index,]$UniprotKB
+                index <- which(id$refID == Un_Onted_refID[i])
+                go <- id[index,]$UniprotKB
 
                 if(length(go) >= 1){
                         Uniprot_id[i] <- go
