@@ -72,7 +72,7 @@ GOGOscavenger <- function(whole, pick, taxiID, write = F, ...){
 
                 if(Uniprot_id[i] != "NA"){
 
-                        uniprot_go[i] <- select(org,
+                        uniprot_go[i] <- UniProt.ws::select(org,
                                                 keys = Uniprot_id[i],
                                                 columns = "GO",
                                                 keytype = "UNIPROTKB")[,2]
