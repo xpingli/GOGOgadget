@@ -1,12 +1,13 @@
-#' UniprotIDMaps converts gene ID to Uniprot identifier
+#' UniprotIDMaps
 #'
 #' @docType data
 #'
 #' @usage data("UniprotIDMaps")
 #'
-#' @format A data frame
-
-
-
-
-
+#' @description conversion of gene ID and Uniprot identifier
+#'
+#' @format a data.frame
+#'
+#'
+#' @references uniprotKB
+"UniprotIDMaps"
