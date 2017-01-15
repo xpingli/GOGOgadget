@@ -7,8 +7,7 @@
 #' @usage data("UniprotIDMaps")
 #'
 #' @format data.frame
-#'
-#'
+#' @references Uniprot
 
 
 
