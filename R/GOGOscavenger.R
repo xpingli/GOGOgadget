@@ -14,7 +14,7 @@ GOGOscavenger <- function(whole, pick, taxiID, write = F, ...){
 
         updown_ids <- whole$refID
 
-        pick <- pick[,-1]
+        pick <- droplevels(pick[,-1])
         pick_ids <- pick$refID
 
         #pick the genes that is not in the GOGOpick processed but do exist as significantly expressed in UpDown.csv
@@ -151,7 +151,7 @@ GOGOscavenger <- function(whole, pick, taxiID, write = F, ...){
                 }
         }
 
-        scavenger <- data.frame(refID = id_ref, geneID = geneid0, proteinID = proids, Family_name = NA, Sub_family_name = NA, goIDs = goid, annotation = annos0,goType = gotypes, goTerms = goterms, Pathway = rep("Uniprot", n), DE = de0, stringsAsFactors = F )
+        scavenger <- data.frame(refID = id_ref, geneID = geneid0, proteinID = proids, Family_name = NA, Sub_family_name = NA, goIDs = goid, annotation = annos0, goType = gotypes, goTerms = goterms, Pathway = rep("Uniprot", n), DE = de0, stringsAsFactors = F )
 
         vulture <- rbind(pick, scavenger)
 
