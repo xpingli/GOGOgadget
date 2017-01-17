@@ -217,24 +217,28 @@ GOGOpick <- function(dataset, database, species, short, write = TRUE, ... ){
         filtered <- DB[which(DBref %in% refids == TRUE),]
 
         #adding differetial expression marker
+        lfc <- vector()
         for( i in 1:nrow(filtered)){
 
 
                 if(filtered$refID[i] %in% up$refID){
                         filtered$DE[i] = "1"
-                        filtered$logFC <- up[which(up$refID == filtered$refID[i]),]$logFC
+                        lfc[i] <- up[which(up$refID == filtered$refID[i]),]$logFC
 
                 } else if(filtered$refID[i] %in% down$refID){
                         filtered$DE[i] = "-1"
-                        filtered$logFC <- down[which(down$refID == filtered$refID[i]),]$logFC
+                        lfc[i] <- down[which(down$refID == filtered$refID[i]),]$logFC
 
                 } else {
                         filtered$DE[i] = "No match"
-                        filtered$logFC <- "NO match"
+                        lfc[i] <- "NO match"
                 }
 
 
         }
+
+        filtered <- cbind(filtered, logFC = lfc)
+        filtered <- filtered[, c(1:6, 12, 7:11)]
 
 
 
