@@ -62,7 +62,7 @@ GOGOscavenger <- function(whole, pick, taxiID, write = F, ...){
 
                 proteinid[i] <- Un_Onted[Un_Onted$refID == refIDs[i],]$proteinID
 
-                fc0[i] <- Un_Onted[Un_Onted$refID == refID[i],]$logFC
+                fc0[i] <- Un_Onted[Un_Onted$refID == refIDs[i],]$logFC
 
                 annos[i] <- Un_Onted[Un_Onted$refID == refIDs[i],]$annotation
 
@@ -115,6 +115,7 @@ GOGOscavenger <- function(whole, pick, taxiID, write = F, ...){
                         geneid0[(n + 1):(n + k)] <- scav$geneID[i]
                         proids[(n + 1):(n + k)] <- scav$proteinID[i]
                         lfc[(n + 1) : (n + k)] <- scav$logFC[i]
+
                         annos0[(n + 1):(n + k)] <- scav$annotation[i]
                         de0[(n + 1):(n + k)] <- scav$DE[i]
 
