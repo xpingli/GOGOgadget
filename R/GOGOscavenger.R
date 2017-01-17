@@ -24,7 +24,7 @@ GOGOscavenger <- function(whole, pick, taxiID, write = F, ...){
         Un_Onted_refID <- Un_Onted$refID
 
 
-        ###-------------------------------------------------------
+        ###-------------------------------------------------------      convert gene ID to uniprot id
         Uniprot_id <- vector()
         for( i in 1:length(Un_Onted_refID)){
 
@@ -46,6 +46,7 @@ GOGOscavenger <- function(whole, pick, taxiID, write = F, ...){
         refIDs <- vector()
         uniprot_go <- vector()
         geneids <- vector()
+        fc0 <- vector() #new
         de <- vector()
         proteinid <- vector()
         annos <- vector()
@@ -61,12 +62,14 @@ GOGOscavenger <- function(whole, pick, taxiID, write = F, ...){
 
                 proteinid[i] <- Un_Onted[Un_Onted$refID == refIDs[i],]$proteinID
 
+                fc0[i] <- Un_Onted[Un_Onted$refID == refID[i],]$logFC
+
                 annos[i] <- Un_Onted[Un_Onted$refID == refIDs[i],]$annotation
 
                 de[i] <- Un_Onted[Un_Onted$refID == refIDs[i],]$DE
 
 
-                #Use UniProt.ws function
+                #Use UniProt.ws function to cross check with Uniprot database
                 org <- UniProt.ws(taxiID)
 
                 if(Uniprot_id[i] != "NA"){
@@ -87,11 +90,12 @@ GOGOscavenger <- function(whole, pick, taxiID, write = F, ...){
 
 
 
-        scav <- data.frame(refID = refIDs, geneID = geneids, proteinID = proteinid, Family_name = NA, Sub_family_name = NA, goIDs = NA, annotation = annos, goType = NA, goTerms = uniprot_go, Pathway = NA, DE = de, stringsAsFactors = F )
+        scav <- data.frame(refID = refIDs, geneID = geneids, proteinID = proteinid, Family_name = NA, Sub_family_name = NA, logFC = fc0, goIDs = NA, annotation = annos, goType = NA, goTerms = uniprot_go, Pathway = NA, DE = de, stringsAsFactors = F )
 
         id_ref <- vector()
         geneid0 <- vector()
         proids <- vector()
+        lfc <- vector()
         annos0 <- vector()
         goterms <- vector()
         goids <- vector()
@@ -110,6 +114,7 @@ GOGOscavenger <- function(whole, pick, taxiID, write = F, ...){
                         id_ref[(n + 1):(n + k)] <- scav$refID[i]
                         geneid0[(n + 1):(n + k)] <- scav$geneID[i]
                         proids[(n + 1):(n + k)] <- scav$proteinID[i]
+                        lfc[(n + 1) : (n + k)] <- scav$logFC[i]
                         annos0[(n + 1):(n + k)] <- scav$annotation[i]
                         de0[(n + 1):(n + k)] <- scav$DE[i]
 
@@ -150,7 +155,7 @@ GOGOscavenger <- function(whole, pick, taxiID, write = F, ...){
                 }
         }
 
-        scavenger <- data.frame(refID = id_ref, geneID = geneid0, proteinID = proids, Family_name = NA, Sub_family_name = NA, goIDs = goid, annotation = annos0, goType = gotypes, goTerms = goterms, Pathway = rep("Uniprot", n), DE = de0, stringsAsFactors = F )
+        scavenger <- data.frame(refID = id_ref, geneID = geneid0, proteinID = proids, Family_name = NA, Sub_family_name = NA, goIDs = goid, logFC = lfc,annotation = annos0, goType = gotypes, goTerms = goterms, Pathway = rep("Uniprot", n), DE = de0, stringsAsFactors = F)
 
         vulture <- rbind(pick, scavenger)
 
