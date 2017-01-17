@@ -143,9 +143,11 @@ GOGOpick <- function(dataset, database, species, short, write = TRUE, ... ){
                 anno_proid <- annotation_df$proteinID
 
 
+
                 Genid <- vector()
                 Proid <- vector()
                 Annos <- vector()
+                fc0 <- vector()
 
                 for(i in 1:nrow(x)){
 
@@ -154,9 +156,11 @@ GOGOpick <- function(dataset, database, species, short, write = TRUE, ... ){
                         if(id_ensembl_x[i] %in% id_ensembl_gene){
 
                                 Genid[i] <- kg.geneid[kg.geneid$refID == id_ensembl_x[i], ]$geneID
+                                fc0[i] <- x[x$refID == id_ensembl_x[i],]$logFC
 
                         } else {
                                 Genid[i] <- "No match"
+                                fc0[i] <- "No match"
                         }
 
                         if(id_ensembl_x[i] %in% id_ensembl_pr){
@@ -179,7 +183,7 @@ GOGOpick <- function(dataset, database, species, short, write = TRUE, ... ){
 
                 }
 
-                data.frame(refID = id_ensembl_x, geneID = Genid, proteinID = Proid, annotation = Annos, DE = x$DE, stringsAsFactors = F)
+                data.frame(refID = id_ensembl_x, geneID = Genid, proteinID = Proid, logFC = fc0, annotation = Annos, DE = x$DE, stringsAsFactors = F)
 
         }
 
@@ -212,16 +216,21 @@ GOGOpick <- function(dataset, database, species, short, write = TRUE, ... ){
 
         filtered <- DB[which(DBref %in% refids == TRUE),]
 
+        #adding differetial expression marker
         for( i in 1:nrow(filtered)){
 
 
                 if(filtered$refID[i] %in% up$refID){
                         filtered$DE[i] = "1"
+                        filtered$logFC <- up[which(up$refID == filtered$refID[i]),]$logFC
 
                 } else if(filtered$refID[i] %in% down$refID){
                         filtered$DE[i] = "-1"
+                        filtered$logFC <- down[which(down$refID == filtered$refID[i]),]$logFC
+
                 } else {
                         filtered$DE[i] = "No match"
+                        filtered$logFC <- "NO match"
                 }
 
 
