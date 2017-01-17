@@ -3,6 +3,7 @@
 export(DBconstruct)
 export(GOGOpick)
 export(GOGOscavenger)
+export(GOGOsearch)
 export(GOGOsummary)
 import(KEGGREST)
 import(RColorBrewer)
