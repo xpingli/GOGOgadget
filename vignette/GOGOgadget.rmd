@@ -1,0 +1,119 @@
+---
+title: "GOGOgadget Package"
+author: "Xiaoping Li"
+date: "January 17, 2017"
+output: pdf_document
+---
+
+#GOGOgadget Package Manual
+
+##Introduction
+
+GOGOgadget contains 5 basic functions to assist RNA seq data **Ontology** analysis. At moment, it best suits the data from *Deinococcus radiodurans*. Four functions are: DBconstruct, GOGOpick, GOGOscavenger, GOGOsummary, GOGOsearch. The GO term databases include PANTHER sequence classfication and UniProt. Details please see [PANTHER](ftp://ftp.pantherdb.org/sequence_classifications/current_release); [UniProt](http://www.uniprot.org/) 
+
+##workflow
+1.
+> DBconstruct() : this function constructs the basic database for GO terms reference. It returns 1) a tidy database with various kind of identifier for convenient access. 2) a general annotation from NCBI database. 3) GO types and terms from PANTHER 4) provide other information for future manipulation and extraction.
+
+DBconstruct(ftp, species, short, write = F, ...)
+
+ftp: the ftp file name for the species in PANTHER. For Drad, it's "PTHR11.0_deinococcus".
+species: the whole latin name for the species. E.g. "Deinococcus radiodurans"
+short: short name for the organism. E.g. "dra"
+write: if false, not to produce a csv file for the database information in your current directory.
+...: if write = T, specify the name for the csv file to be saved.
+
+
+2.
+> GOGOpick(): this function extracts GO information from the DB database according to your edgeR or DESeq2 processed data sets. It picks genes that are significantly differetially expressed( FDR or padj < 0.05, logFC > 1 or < -1). It also adds GO terms, GOtypes, identifiers and other information to those genes. It generate 3 csv files with 1) up regulated genes, 2) down regulated genes, 3) combining Up and Down genes into your current directory([dra]upReg.csv, [dra]downReg.csv, [dra]UpDown.csv). These 3 files do not contain GO terms. It also generates a csv file containing GO terms for all the up and down genes if write = T, and specify the file name in "...". If **not match** were found in the database, it returns NA or "No Match" for corresponding information columns. 
+
+GOGOpick(dataset, database, species, short, write = TRUE, ... )
+
+dataset: edgeR or DESeq2 processed dataset
+database: DBconstruct() processed
+species: the whole latin name of your organism
+short: the short name for your organism
+write: if true: write the GOterm added data.frame into a csv file, file name is defined by "..."; if FALSE, just create a data.frame for downstream process.
+
+3.
+> GOGOscavenger(): This function compares the list of up and down genes(UpDown.csv) to the data set(e.g. pick.csv) produced by GOGOpick. It looks for the genes in UpDown.csv but not in the pick.csv. The reason probably those genes do not have GO terms in PANTHER. GOGOscavenger() will reference UniProt for GO terms for those genes and add those genes to the pick.csv list.
+
+GOGOscavenger(whole, pick, taxiID, write = F, ...)
+
+whole: UpDown.csv
+pick: pick.csv
+taxiID: e.g. 243230 (dra)
+write: if true, it produces a csv file with up and down genes annotated by GO terms in PANTHER and UniProt; if FALSE, it returns a data frame.
+
+4.
+> GOGOsummary(): This funciton summarize the dataset GOGOscavenger process. It present the GO term proportions in GO types(MF, BP, CC, PC) and in up/down genes as a form of pie chart.
+
+GOGOsummary(scavenger, gotype)
+
+scavenger: GOGOscavenger() processed data set
+gotype: MF, BP, CC, PC
+
+5.
+> GOGOsearch(): This function helps you narrow down and returns the genes you are interested.
+
+GOGOsearch(scav, help = T, view = c("full", "search"), goterm, gotype = "PC", ...)
+
+scav: GOGOscavenger() processed data set
+help: if TRUE, provides all the GO terms in the input dataset, it is convenient if you don't know what terms to look for.
+view: "full" shows you in each GO type, how many GO terms are up regulated or down regulated; if "search", won't show the all previously mentioned information.
+goterm: specify what GO term you look for.
+gotype: MF, BP, CC, PC
+
+
+## Example
+
+Load package
+```{r}
+library(GOGOgadget)
+```
+
+
+1. Step 1: Load database using DBconstruct()
+```{r, message=FALSE, warning=FALSE}
+database <- DBconstruct("PTHR11.0_deinococcus", "Deinococcus radiodurans", "dra", write = F)
+
+head(database)
+```
+
+
+2. Step2: Load edgeR or DESeq2 processed data set and using GOGOpick() to pick significantly differentially expressed genes and add in GO terms, types and other information.
+```{r, message=FALSE, warning=FALSE}
+dataset <- "[V2]drad_24_diff_edgeR.csv"
+pick <- GOGOpick(dataset, database, "Deinococcus radiodurans", "dra", write = T, "pick.csv")
+head(pick)
+```
+
+3.Step3: Use GOGOscavenger() to find genes that do not have GO hits in PANTHER and reroute to UniProt to look for GO terms.`243230` is the taxonomy ID for *Deinococcus radiodurans*. 
+```{r, message=FALSE, warning=FALSE}
+UpDown <- read.csv("[dra]UpDown.csv", stringsAsFactors = F)
+
+head(UpDown)
+
+scav <- GOGOscavenger(UpDown, pick, 243230, write = T, "[dra]hr24_ontology.csv")
+
+head(scav)
+tail(scav)
+```
+4.Step4: This step is to summarize the data in scav. Use GOGOsummary.
+```{r, message=FALSE, warning=FALSE}
+GOGOsummary(scav, "MF")
+GOGOsummary(scav, "BP")
+GOGOsummary(scav, "CC")
+GOGOsummary(scav, "PC")
+```
+
+5.Step5: Search for the genes you are interested in certain funcitons. Using GOGOsearch().
+```{r}
+
+GOGOsearch(scav, F, "full", "transporter", "MF")
+GOGOsearch(scav, T, "search", "reductase", "MF")
+GOGOsearch(scav, F, "search", "membrane", "CC")
+
+```
+
+
