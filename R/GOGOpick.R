@@ -25,7 +25,7 @@ GOGOpick <- function(dataset, database, species, short, write = TRUE, ... ){
         #DESeq2
         if(pattern %in% Colnamez){
                 up <-  Sig %>%
-                        filter(padj <= 0.05 & log2FoldChange >= 1) %>%
+                        filter(padj <= 0.1 & log2FoldChange >= 1) %>%
                         select(refID, log2FoldChange) %>%
                         mutate(DE = "1")
 
@@ -34,7 +34,7 @@ GOGOpick <- function(dataset, database, species, short, write = TRUE, ... ){
 
 
                 down <-  Sig %>%
-                        filter(padj <= 0.05 & log2FoldChange <= -1) %>%
+                        filter(padj <= 0.1 & log2FoldChange <= -1) %>%
                         select(refID, log2FoldChange) %>%
                         mutate(DE = "-1")
 
@@ -45,14 +45,14 @@ GOGOpick <- function(dataset, database, species, short, write = TRUE, ... ){
         } else {
 
                 up <-   Sig %>%
-                        filter(FDR <= 0.05 & logFC >= 1) %>%
+                        filter(FDR <= 0.1 & logFC >= 1) %>%
                         select(refID, logFC) %>%
                         mutate(DE = "1")
 
 
 
                 down <- Sig %>%
-                        filter(FDR <= 0.05 & logFC <= -1) %>%
+                        filter(FDR <= 0.1 & logFC <= -1) %>%
                         select(refID, logFC) %>%
                         mutate(DE = "-1")
 
